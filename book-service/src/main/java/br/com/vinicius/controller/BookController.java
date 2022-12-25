@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.vinicius.model.Book;
+import br.com.vinicius.proxy.CambioProxy;
 import br.com.vinicius.repository.BookRepository;
 
 @RestController
@@ -21,6 +22,9 @@ public class BookController {
 
 	@Autowired
 	private Environment environment;
+	
+	@Autowired
+	private CambioProxy cambioProxy;
 
 	@GetMapping("/{id}/{currency}")
 	public Book getBook(@PathVariable Long id, @PathVariable String currency) {
@@ -29,9 +33,11 @@ public class BookController {
 		if (book.isEmpty()) {
 			throw new RuntimeException("Not found book with id = " + id);
 		}
+		var cambio = cambioProxy.getCambio(book.get().getPrice(), "USD", currency);
+		
 		var port = environment.getProperty("local.server.port");
+		book.get().setPrice(cambio.getConvertedValue());
 		book.get().setEnvironment(port);
-		book.get().setCurrency(currency);
 		return book.get();
 	}
 

@@ -3,6 +3,8 @@ package br.com.vinicius.model;
 import java.util.Date;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +35,7 @@ public class Book {
 	private String title;
 
 	@Transient
+	@JsonIgnore
 	private String currency;
 
 	@Transient
