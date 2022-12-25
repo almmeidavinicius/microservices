@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.vinicius.CambioRepository;
 import br.com.vinicius.model.Cambio;
+import br.com.vinicius.repository.CambioRepository;
 
 @RestController
 @RequestMapping("/cambio-service")
